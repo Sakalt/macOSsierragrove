@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .photos-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .photos-content {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+            background: #fafafa;
+            gap: 10px;
+        }
+
+        .photo {
+            width: 150px;
+            height: 150px;
+            background: #ddd;
+            border-radius: 5px;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="photos-container">
+        <div class="title-bar">
+            Photos
+        </div>
+        <div class="photos-content">
+            <div class="photo" style="background-image: url('https://via.placeholder.com/150');"></div>
+            <div class="photo" style="background-image: url('https://via.placeholder.com/150');"></div>
+        </div>
+    </div>
+</body>
+</html>
