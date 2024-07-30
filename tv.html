@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .tv-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .tv-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .video-item {
+            display: flex;
+            flex-direction: column;
+            background: #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .video-item button {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .video-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .upload-section {
+            margin-bottom: 20px;
+        }
+
+        .upload-section input[type="file"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="tv-container">
+        <div class="title-bar">
+            TV
+        </div>
+        <div class="tv-content">
+            <div class="upload-section">
+                <input type="file" id="upload" accept="video/*">
+            </div>
+            <div class="search-bar">
+                <input type="text" id="search" placeholder="動画を検索...">
+            </div>
+            <div class="video-list" id="video-list">
+                <!-- 動画リストがここに表示される -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const videoListElement = document.getElementById('video-list');
+        const searchInput = document.getElementById('search');
+        const uploadInput = document.getElementById('upload');
+
+        // ローカルストレージから動画データを取得
+        function getVideoData() {
+            return JSON.parse(localStorage.getItem('videos')) || [];
+        }
+
+        // ローカルストレージに動画データを保存
+        function saveVideoData(videos) {
+            localStorage.setItem('videos', JSON.stringify(videos));
+        }
+
+        // 動画リストを表示する
+        function displayVideos(videosToDisplay) {
+            videoListElement.innerHTML = '';
+            videosToDisplay.forEach(video => {
+                const videoItem = document.createElement('div');
+                videoItem.className = 'video-item';
+                videoItem.innerHTML = `
+                    <img src="${video.thumbnail}" alt="${video.title}">
+                    <button onclick="playVideo('${video.url}')">${video.title} (${video.views} views)</button>
+                `;
+                videoListElement.appendChild(videoItem);
+            });
+        }
+
+        // 動画を再生する
+        function playVideo(url) {
+            // 動画の再生数を更新
+            const videos = getVideoData();
+            const video = videos.find(v => v.url === url);
+            if (video) {
+                video.views++;
+                saveVideoData(videos);
+                displayVideos(videos);  // 再表示してビュー数を更新
+            }
+            window.open(url, '_blank');
+        }
+
+        // 動画をアップロードする
+        function uploadVideo(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const videoUrl = event.target.result;
+                const videoTitle = file.name;
+                const videoThumbnail = 'https://via.placeholder.com/150'; // サムネイルはデフォルトの画像
+                const videoData = {
+                    title: videoTitle,
+                    thumbnail: videoThumbnail,
+                    url: videoUrl,
+                    views: 0
+                };
+
+                const videos = getVideoData();
+                videos.push(videoData);
+                saveVideoData(videos);
+                displayVideos(videos);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // イベントリスナー
+        uploadInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                uploadVideo(file);
+            }
+        });
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const videos = getVideoData();
+            const filteredVideos = videos.filter(video => video.title.toLowerCase().includes(searchTerm));
+            displayVideos(filteredVideos);
+        });
+
+        // 初期表示
+        displayVideos(getVideoData());
+    </script>
+</body>
+</html>
