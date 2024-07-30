@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .calendar-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .calendar-header {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+        }
+
+        .calendar-grid div {
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .calendar-grid div:nth-child(7n) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="title-bar">
+            Calendar
+        </div>
+        <div class="content">
+            <div class="calendar-header">
+                <h1>Calendar</h1>
+                <p>2024年のカレンダー</p>
+            </div>
+            <div class="calendar-grid">
+                <div>日</div>
+                <div>月</div>
+                <div>火</div>
+                <div>水</div>
+                <div>木</div>
+                <div>金</div>
+                <div>土</div>
+                <!-- 日付サンプル -->
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+                <!-- 続く日付を追加 -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
