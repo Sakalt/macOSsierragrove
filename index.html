@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>macOS Sierra Grove</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        
+        #lock-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        #lock-screen p {
+            font-size: 24px;
+        }
+
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        #login-screen input {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        #login-screen button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        #login-screen button:hover {
+            background: #0056b3;
+        }
+
+        .window {
+            width: 600px;
+            height: 400px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            resize: both;
+            display: none;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        button {
+            background: #e0e0e0;
+            border: none;
+            border-radius: 3px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #d0d0d0;
+        }
+
+        .title {
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="lock-screen">
+        <p>ロック画面</p>
+        <button onclick="unlockScreen()">ロック解除</button>
+    </div>
+
+    <div id="login-screen">
+        <p>ログイン</p>
+        <input type="text" id="username" placeholder="ユーザー名">
+        <input type="password" id="password" placeholder="パスワード">
+        <button onclick="login()">ログイン</button>
+    </div>
+
+    <div id="app-container"></div>
+
+    <script>
+        let isDragging = false;
+        let offsetX, offsetY;
+        let loggedIn = false;
+
+        const apps = [
+            { id: 'version-info', title: 'バージョン情報', content: '<p>macOS Sierra Grove バージョン 1.0</p>' },
+            { id: 'safari', title: 'Safari', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/safari.html' },
+            { id: 'mail', title: 'Mail', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/mail.html' },
+            { id: 'calendar', title: 'Calendar', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/calendar.html' },
+            { id: 'contacts', title: 'Contacts', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/contacts.html' },
+            { id: 'maps', title: 'Maps', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/maps.html' },
+            { id: 'facetime', title: 'FaceTime', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/facetime.html' },
+            { id: 'messages', title: 'Messages', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/messages.html' },
+            { id: 'music', title: 'Music', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/music.html' },
+            { id: 'photos', title: 'Photos', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/photos.html' },
+            { id: 'tv', title: 'TV', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/tv.html' },
+            { id: 'news', title: 'News', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/news.html' },
+            { id: 'stocks', title: 'Stocks', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/stocks.html' },
+            { id: 'reminders', title: 'Reminders', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/reminders.html' },
+            { id: 'notes', title: 'Notes', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/notes.html' },
+            { id: 'maps', title: 'Maps', iframeSrc: 'https://sakalt.github.io/macOSsierragrove/maps.html' }
+        ];
+
+        function createWindow(id, title, content, iframeSrc) {
+            const appContainer = document.getElementById('app-container');
+            const windowDiv = document.createElement('div');
+            windowDiv.id = id;
+            windowDiv.className = 'window';
+            windowDiv.innerHTML = `
+                <div class="title-bar">
+                    <div class="buttons">
+                        <button class="close" onclick="closeWindow('${id}')">×</button>
+                        <button class="minimize" onclick="minimizeWindow('${id}')">–</button>
+                        <button class="maximize" onclick="maximizeWindow('${id}')">⤢</button>
+                    </div>
+                    <div class="title">${title}</div>
+                </div>
+                <div class="content">
+                    ${iframeSrc ? `<iframe class="iframe-container" src="${iframeSrc}"></iframe>` : content}
+                </div>
+            `;
+            appContainer.appendChild(windowDiv);
+            setupWindowEvents(id);
+        }
+
+        function setupWindowEvents(windowId) {
+            const windowElement = document.getElementById(windowId);
+            const titleBar = windowElement.querySelector('.title-bar');
+
+            titleBar.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                offsetX = e.clientX - windowElement.offsetLeft;
+                offsetY = e.clientY - windowElement.offsetTop;
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    windowElement.style.left = (e.clientX - offsetX) + 'px';
+                    windowElement.style.top = (e.clientY - offsetY) + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function minimizeWindow(id) {
+            const windowElement = document.getElementById(id);
+            windowElement.style.height = '30px';
+            windowElement.querySelector('.content').style.display = 'none';
+        }
+
+        function maximizeWindow(id) {
+            const windowElement = document.getElementById(id);
+            if (windowElement.style.width === '100vw' && windowElement.style.height === '100vh') {
+                windowElement.style.width = '600px';
+                windowElement.style.height = '400px';
+            } else {
+                windowElement.style.width = '100vw';
+                windowElement.style.height = '100vh';
+            }
+        }
+
+        function unlockScreen() {
+            if (loggedIn) {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.querySelectorAll('.window').forEach(win => win.style.display = 'block');
+            } else {
+                document.getElementById('login-screen').style.display = 'block';
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                loggedIn = true;
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('lock-screen').style.display = 'none';
+                apps.forEach(app => createWindow(app.id, app.title, app.content, app.iframeSrc));
+            } else {
+                alert('ユーザー名とパスワードを入力してください');
+            }
+        }
+
+        // 初期化
+        unlockScreen();
+    </script>
+</body>
+</html>
