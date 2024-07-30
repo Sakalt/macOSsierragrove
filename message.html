@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .messages-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .messages-content {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            background: #fafafa;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="messages-container">
+        <div class="title-bar">
+            Messages
+        </div>
+        <div class="messages-content">
+            <div class="message">こんにちは！</div>
+            <div class="message">お元気ですか？</div>
+        </div>
+    </div>
+</body>
+</html>
