@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FaceTime</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .facetime-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .facetime-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ddd;
+        }
+
+        .facetime-video {
+            width: 80%;
+            height: 80%;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="facetime-container">
+        <div class="title-bar">
+            FaceTime
+        </div>
+        <div class="facetime-content">
+            <div class="facetime-video">
+                <!-- ビデオ通話機能を模擬するエリア -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
