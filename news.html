@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .news-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .news-content {
+            flex: 1;
+            padding: 10px;
+            background: #fafafa;
+        }
+
+        .news-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="news-container">
+        <div class="title-bar">
+            News
+        </div>
+        <div class="news-content">
+            <div class="news-item">最新ニュース1</div>
+            <div class="news-item">最新ニュース2</div>
+        </div>
+    </div>
+</body>
+</html>
