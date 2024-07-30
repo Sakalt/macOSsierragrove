@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .mail-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .email-header {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .email-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .email-list li {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .email-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="mail-container">
+        <div class="title-bar">
+            Mail
+        </div>
+        <div class="content">
+            <div class="email-header">
+                <h1>Mail</h1>
+                <p>受信トレイ</p>
+            </div>
+            <ul class="email-list">
+                <li>
+                    <strong>件名:</strong> サンプルメール1<br>
+                    <strong>差出人:</strong> example@example.com
+                </li>
+                <li>
+                    <strong>件名:</strong> サンプルメール2<br>
+                    <strong>差出人:</strong> example2@example.com
+                </li>
+                <li>
+                    <strong>件名:</strong> サンプルメール3<br>
+                    <strong>差出人:</strong> example3@example.com
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
