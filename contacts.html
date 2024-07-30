@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .contacts-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .contact-list li {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .contact-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="contacts-container">
+        <div class="title-bar">
+            Contacts
+        </div>
+        <div class="content">
+            <h1>Contacts</h1>
+            <ul class="contact-list">
+                <li>
+                    <strong>名前:</strong> 山田 太郎<br>
+                    <strong>電話番号:</strong> 080-1234-5678
+                </li>
+                <li>
+                    <strong>名前:</strong> 佐藤 花子<br>
+                    <strong>電話番号:</strong> 090-8765-4321
+                </li>
+                <li>
+                    <strong>名前:</strong> 鈴木 次郎<br>
+                    <strong>電話番号:</strong> 070-1357-2468
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
