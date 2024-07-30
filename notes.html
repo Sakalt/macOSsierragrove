@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .notes-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #333;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .notes-content {
+            flex: 1;
+            padding: 10px;
+            background: #fafafa;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="notes-container">
+        <div class="title-bar">
+            Notes
+        </div>
+        <div class="notes-content">
+            <textarea class="notes-textarea" placeholder="ここにメモを記入してください..."></textarea>
+        </div>
+    </div>
+</body>
+</html>
